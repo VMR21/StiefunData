@@ -24,13 +24,25 @@ function getDynamicApiUrl() {
   const now = new Date();
   const year = now.getUTCFullYear();
   const month = now.getUTCMonth();
-  const start = new Date(Date.UTC(year, month, 1));
-  const end = new Date(Date.UTC(year, month + 1, 0));
+
+  let start, end;
+
+  if (now.getUTCDate() >= 20) {
+    // Between 20th this month and 19th next month
+    start = new Date(Date.UTC(year, month, 20));
+    end = new Date(Date.UTC(year, month + 1, 19, 23, 59, 59));
+  } else {
+    // Between 1st and 19th this month
+    start = new Date(Date.UTC(year, month - 1, 20));
+    end = new Date(Date.UTC(year, month, 19, 23, 59, 59));
+  }
+
   const startStr = start.toISOString().slice(0, 10);
   const endStr = end.toISOString().slice(0, 10);
 
   return `https://services.rainbet.com/v1/external/affiliates?start_at=${startStr}&end_at=${endStr}&key=${API_KEY}`;
 }
+
 
 async function fetchAndCacheData() {
   try {

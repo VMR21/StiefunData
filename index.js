@@ -27,15 +27,16 @@ function getDynamicApiUrl() {
 
   let start, end;
 
-if (now.getUTCDate() >= 20) {
-  // Between 20th this month and 19th next month
-  start = new Date(Date.UTC(year, month, 20));
-  end = new Date(Date.UTC(year, month + 1, 19));
+if (now.getUTCDate() >= 19) {
+  // From 19th this month to 18th next month
+  start = new Date(Date.UTC(year, month, 19));
+  end = new Date(Date.UTC(year, month + 1, 18));
 } else {
-  // Between 20th last month and 19th this month
-  start = new Date(Date.UTC(year, month - 1, 20));
-  end = new Date(Date.UTC(year, month, 19));
+  // From 19th last month to 18th this month
+  start = new Date(Date.UTC(year, month - 1, 19));
+  end = new Date(Date.UTC(year, month, 18));
 }
+
 
   const startStr = start.toISOString().slice(0, 10);
   const endStr = end.toISOString().slice(0, 10);
